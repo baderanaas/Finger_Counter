@@ -29,19 +29,21 @@ while True:
 
     if len(lmList) != 0:
         fingers = []
-        
-        if lmList[tipIds[id]][1] > lmList[tipIds[id] - 1][1]:
+
+        if lmList[tipIds[0]][1] > lmList[tipIds[0] - 1][1]:
             fingers.append(1)
         else:
             fingers.append(0)
-        
+
         for id in range(1, 5):
-            if lmList[id][2] < lmList[id - 2][2]:
+            if lmList[tipIds[id]][2] < lmList[tipIds[id] - 2][2]:
                 fingers.append(1)
             else:
                 fingers.append(0)
 
-            
+        totalFingers = fingers.count(1)
+        print(totalFingers)
+
     h, w, c = overlayList[0].shape
     img[0:h, 0:w] = overlayList[0]
 
