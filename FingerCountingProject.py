@@ -1,6 +1,7 @@
 import cv2
 import time
 import os
+import HandTracking as htm
 
 wCam, hCam = 640, 480
 
@@ -16,8 +17,12 @@ for imPath in myList:
     overlayList.append(image)
 
 pTime = 0
+
+detector = htm.HandDetector(detectionCon=0.75)
+
 while True:
     success, img = cap.read()
+    img = detector.findHands(img)
 
     h, w, c = overlayList[0].shape
     img[0:h, 0:w] = overlayList[0]
