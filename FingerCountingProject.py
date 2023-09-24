@@ -20,24 +20,28 @@ pTime = 0
 
 detector = htm.HandDetector(detectionCon=0.75)
 
+tipIds = [4, 8, 12, 16, 20]
+
 while True:
     success, img = cap.read()
     img = detector.findHands(img)
     lmList = detector.findPosition(img, draw=False)
 
     if len(lmList) != 0:
-        if lmList[8][2] < lmList[6][2]:
-            print("Index finger open")
+        fingers = []
+        
+        if lmList[tipIds[id]][1] > lmList[tipIds[id] - 1][1]:
+            fingers.append(1)
+        else:
+            fingers.append(0)
+        
+        for id in range(1, 5):
+            if lmList[id][2] < lmList[id - 2][2]:
+                fingers.append(1)
+            else:
+                fingers.append(0)
 
-        if lmList[12][2] < lmList[10][2]:
-            print("Middle finger open")
-
-        if lmList[16][2] < lmList[14][2]:
-            print("Ring finger open")
-
-        if lmList[20][2] < lmList[18][2]:
-            print("Pinky finger open")
-
+            
     h, w, c = overlayList[0].shape
     img[0:h, 0:w] = overlayList[0]
 
